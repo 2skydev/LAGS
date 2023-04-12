@@ -1,20 +1,17 @@
-const providerURLs = [
-  'http://member.onstove.com/oauth/google',
-  'https://member.onstove.com/oauth/google',
-]
-
 const normalTabDetectKey = '&lost_ark_sign_normal_tab=1'
 
 chrome.tabs.onCreated.addListener(tab => {
-  const isProviderSignTab = providerURLs.some(providerURL => tab.pendingUrl.indexOf(providerURL) === 0)
-  const isNormalTab = tab.pendingUrl.includes(normalTabDetectKey)
+  const url = tab.pendingUrl || '';
 
-  if (isProviderSignTab && !isNormalTab) {
-    chrome.windows.create({
-      incognito: false,
-      url: tab.pendingUrl + normalTabDetectKey
-    })
+  if (!url) return;
+  if (url.indexOf('https://accounts.google.com') !== 0) return;
+  if (!url.includes('onstove.com')) return;
+  if (url.includes(normalTabDetectKey)) return;
 
-    chrome.tabs.remove(tab.id)
-  }
+  chrome.windows.create({
+    incognito: false,
+    url: tab.pendingUrl + normalTabDetectKey
+  })
+
+  chrome.tabs.remove(tab.id)
 })
