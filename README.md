@@ -14,5 +14,3 @@ You can download it through the link on the right. [Chrome Store Link](https://c
 
 ## Preview
 ![image](https://user-images.githubusercontent.com/43225384/188297915-d53a0171-abe8-4758-861c-3fb50754bf1a.png)
-
-test
